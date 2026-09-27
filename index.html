@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة أنتيمك - Anteemak PWA</title>
+    <style>
+        :root {
+            --bg-primary: #FAF8F5;
+            --card-bg: #FFFFFF;
+            --border-color: #E8E3D9;
+            --primary-accent: #00A8FF;
+            --success-color: #34C759;
+            --warning-color: #FF3B30;
+            --text-main: #1C1C1E;
+            --text-sub: #6E6E73;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            direction: rtl;
+        }
+
+        /* App Container (Mobile Frame) */
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            height: 100vh;
+            max-height: 900px;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            height: 60px;
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            cursor: pointer;
+            text-decoration: none;
+            width: 20%;
+        }
+
+        .nav-item.active {
+            color: var(--primary-accent);
+            font-weight: bold;
+        }
+
+        .nav-icon {
+            font-size: 1.3rem;
+            margin-bottom: 2px;
+        }
+
+        /* Page Layout */
+        .page-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 16px 80px 16px;
+            display: none;
+        }
+
+        .page-content.active {
+            display: block;
+        }
+
+        /* UI Components */
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-accent);
+            color: #FFFFFF;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: #FFFFFF;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        .input-group {
+            margin-bottom: 14px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            margin-bottom: 6px;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            background-color: #FFFFFF;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .badge-success {
+            color: var(--success-color);
+            border-color: var(--success-color);
+        }
+
+        .badge-warning {
+            color: var(--warning-color);
+            border-color: var(--warning-color);
+        }
+
+        .header-title {
+            font-size: 1.3rem;
+            color: var(--text-main);
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        /* Specific Page Styles */
+        /* Blur Matrix Mock */
+        .blur-box {
+            filter: blur(5px);
+            user-select: none;
+            opacity: 0.6;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- PAGE 1: LOGIN PAGE -->
+    <div id="page-login" class="page-content active">
+        <div style="text-align: center; margin-top: 40px; margin-bottom: 30px;">
+            <h1 style="color: var(--primary-accent); font-size: 2rem;">أنتيمك</h1>
+            <p style="color: var(--text-sub); font-size: 0.9rem; margin-top: 6px;">تواصل حقيقي. قيمة واضحة. مكافآت شفافة.</p>
+        </div>
+
+        <div class="card">
+            <h3 class="header-title" style="font-size: 1.1rem; text-align: right;">تسجيل الدخول / حساب جديد</h3>
+            
+            <div class="input-group">
+                <label>رقم الموبايل (OTP)</label>
+                <input type="tel" placeholder="01xxxxxxxxx" dir="ltr" style="text-align: right;">
+            </div>
+
+            <button class="btn btn-primary" onclick="navigateTo('page-onboarding')">إرسال كود التحقق 💬</button>
+        </div>
+
+        <div style="text-align: center; margin: 16px 0; color: var(--text-sub); font-size: 0.85rem;">أو عبر التواصل الاجتماعي</div>
+
+        <button class="btn btn-outline" style="margin-bottom: 10px;" onclick="navigateTo('page-onboarding')">المتابعة باستخدام Facebook 🔵</button>
+        <button class="btn btn-outline" onclick="navigateTo('page-onboarding')">المتابعة باستخدام Instagram 📸</button>
+
+        <div class="card" style="margin-top: 30px; border-right: 4px solid var(--primary-accent);">
+            <p style="font-size: 0.75rem; color: var(--text-sub); line-height: 1.4;">
+                🔒 <strong>تنبيه الأمان والخصوصية:</strong> المنصة للتواصل والتوافق الاجتماعي فقط. يُحظر تماماً تبادل المعاملات المالية المباشرة خارج النظام.
+            </p>
+        </div>
+    </div>
+
+    <!-- PAGE 2: ONBOARDING & PROGRESSIVE PROFILING -->
+    <div id="page-onboarding" class="page-content">
+        <h2 class="header-title">بناء بروفايلك (Onboarding)</h2>
+
+        <div class="card">
+            <div class="badge badge-success" style="margin-bottom: 10px;">الخطوة 1 من 4</div>
+            <h3>البيانات الأساسية</h3>
+            <br>
+            <div class="input-group">
+                <label>الاسم الأول</label>
+                <input type="text" placeholder="مثال: أحمد">
+            </div>
+            <div class="input-group">
+                <label>السن</label>
+                <input type="number" placeholder="25">
+            </div>
+            <div class="input-group">
+                <label>المحافظة والمدينة</label>
+                <input type="text" placeholder="القاهرة، Nasr City">
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>المواصفات البدنية (لتوليد الأفاتار)</h3>
+            <br>
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>الطول (سم)</label>
+                    <input type="number" placeholder="175">
+                </div>
+                <div class="input-group">
+                    <label>لون البشرة</label>
+                    <select>
+                        <option>قمحي</option>
+                        <option>أبيض</option>
+                        <option>أسمر</option>
+                    </select>
+                </div>
+            </div>
+            <div class="input-group">
+                <label>الحجاب (للنساء)</label>
+                <select>
+                    <option>محجبة</option>
+                    <option>غير محجبة</option>
+                    <option>نقاب</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="card" style="text-align: center; background-color: var(--bg-primary);">
+            <p style="font-size: 0.85rem; color: var(--text-sub);">🎨 <strong>الأفاتار الكاريكاتيري المولد:</strong></p>
+            <div style="font-size: 3rem; margin: 10px 0;">🧔‍♂️</div>
+            <p style="font-size: 0.75rem; color: var(--text-sub);">هويتك البصرية الآمنة جاهزة دون الحاجة لنشر صورتك الحقيقية!</p>
+        </div>
+
+        <button class="btn btn-primary" onclick="navigateTo('page-profile')">حفظ واكتمال البروفايل ➔</button>
+    </div>
+
+    <!-- PAGE 3: PROFILE & BLUR MATRIX PAGE -->
+    <div id="page-profile" class="page-content">
+        <div class="card" style="text-align: center;">
+            <div style="font-size: 3.5rem;">🧔‍♂️</div>
+            <h2>أحمد - Friend Lvl.1</h2>
+            <p style="color: var(--text-sub); font-size: 0.85rem;">القاهرة | 28 سنة</p>
+            <div style="margin-top: 8px;">
+                <span class="badge badge-success">بروفايل موثق 80%</span>
+                <span class="badge">⭐ 4.8 / 5</span>
+            </div>
+        </div>
+
+        <!-- Role Custom View Tabs (Demo Switch) -->
+        <div class="card">
+            <label style="font-size: 0.8rem; color: var(--text-sub);">تبديل رؤية الواجهة (تجريبي):</label>
+            <select id="roleSelector" onchange="toggleProfileRole(this.value)" style="margin-top: 6px; padding: 6px; width: 100%;">
+                <option value="buyer">واجهة الشاري (الذكر)</option>
+                <option value="seller">واجهة البائع (الأنثى / الأرباح)</option>
+                <option value="admin">واجهة الأدمن (Audit & Red Flags)</option>
+            </select>
+        </div>
+
+        <!-- Buyer Specific Panel -->
+        <div id="buyerPanel" class="card" style="border-right: 4px solid var(--primary-accent);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <div style="font-size: 0.8rem; color: var(--text-sub);">رصيد النقاط المتاحة</div>
+                    <div style="font-size: 1.3rem; font-weight: bold; color: var(--primary-accent);">12,400 نقطة</div>
+                </div>
+                <button class="btn btn-primary" style="width: auto; padding: 6px 12px; font-size: 0.85rem;" onclick="navigateTo('page-store')">شحن ➕</button>
+            </div>
+            <p style="font-size: 0.75rem; color: var(--text-sub); margin-top: 8px;">تكلفة الرسالة الحالية: 150 نقطة (رتبة صديق)</p>
+        </div>
+
+        <!-- Seller Specific Panel (Hidden by default) -->
+        <div id="sellerPanel" class="card" style="border-right: 4px solid var(--success-color); display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <div style="font-size: 0.8rem; color: var(--text-sub);">الأرباح المجمعة للكاش</div>
+                    <div style="font-size: 1.3rem; font-weight: bold; color: var(--success-color);">350.00 جنيه</div>
+                </div>
+                <button class="btn btn-success" style="width: auto; padding: 6px 12px; font-size: 0.85rem;">سحب الأرباح 💸</button>
+            </div>
+            <p style="font-size: 0.75rem; color: var(--text-sub); margin-top: 8px;">نسبة التحويل الحالية: 45% (صديق بايع)</p>
+        </div>
+
+        <!-- Admin Audit Panel (Hidden by default) -->
+        <div id="adminPanel" class="card" style="border-right: 4px solid var(--warning-color); display: none;">
+            <div style="font-size: 0.85rem; font-weight: bold; color: var(--warning-color);">⚠️ لوحة فحص الأدمن (Admin Audit)</div>
+            <p style="font-size: 0.75rem; color: var(--text-sub); margin-top: 4px;">Red Flags: لا يوجد تناقضات في الاسم أو الموقع.</p>
+            <div class="grid-2" style="margin-top: 10px;">
+                <button class="btn btn-outline" style="font-size: 0.75rem; color: var(--success-color);">قبول وتجاوز 🟢</button>
+                <button class="btn btn-outline" style="font-size: 0.75rem; color: var(--warning-color);">حظر الحساب 🛑</button>
+            </div>
+        </div>
+
+        <!-- Blur Matrix Demonstration -->
+        <div class="card">
+            <h3>التوافق المعنوي والشخصية</h3>
+            <p style="font-size: 0.85rem; margin-top: 6px;">نسبة التوافق النفسي معك: <strong style="color: var(--success-color);">88%</strong></p>
+            <div style="margin-top: 10px;" class="grid-2">
+                <span class="badge">هادي 75%</span>
+                <span class="badge">بيتوتي 90%</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>الصور الشخصية (Blur Matrix)</h3>
+            <br>
+            <div class="blur-box" style="background-color: #DDD; height: 100px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                🔒 صور حقيقية عالية الدقة
+            </div>
+            <p style="font-size: 0.75rem; color: var(--text-sub); margin-top: 8px; text-align: center;">"وثّق بروفايلك للوصول إلى VIP Unlock ورؤية الصور!"</p>
+        </div>
+    </div>
+
+    <!-- PAGE 4: POINT STORE & RECHARGE PAGE -->
+    <div id="page-store" class="page-content">
+        <h2 class="header-title">متجر النقاط (Point Store)</h2>
+
+        <div class="card" style="background-color: #EBF8FF; border-color: var(--primary-accent);">
+            <p style="font-size: 0.85rem; color: var(--text-main);">💡 <strong>السعر المرجعي للنقطة:</strong> 1 قرش عند باقة الـ 1,000 جنيه.</p>
+        </div>
+
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <strong>باقة التجربة</strong>
+                    <div style="font-size: 0.8rem; color: var(--text-sub);">4,000 نقطة</div>
+                </div>
+                <div>
+                    <span class="badge">50 جنيه</span>
+                    <button class="btn btn-primary" style="padding: 4px 10px; font-size: 0.8rem; margin-top: 4px;">شراء</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <strong>الباقة الاقتصادية ⭐</strong>
+                    <div style="font-size: 0.8rem; color: var(--text-sub);">9,000 نقطة</div>
+                </div>
+                <div>
+                    <span class="badge">100 جنيه</span>
+                    <button class="btn btn-primary" style="padding: 4px 10px; font-size: 0.8rem; margin-top: 4px;">شراء</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="border: 2px solid var(--primary-accent);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <strong>باقة التوفير الممتاز🔥</strong>
+                    <div style="font-size: 0.8rem; color: var(--text-sub);">48,000 نقطة</div>
+                </div>
+                <div>
+                    <span class="badge badge-success">500 جنيه</span>
+                    <button class="btn btn-primary" style="padding: 4px 10px; font-size: 0.8rem; margin-top: 4px;">شراء</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <strong>باقة كبار المستخدمين (VIP)</strong>
+                    <div style="font-size: 0.8rem; color: var(--text-sub);">100,000 نقطة</div>
+                </div>
+                <div>
+                    <span class="badge">1,000 جنيه</span>
+                    <button class="btn btn-primary" style="padding: 4px 10px; font-size: 0.8rem; margin-top: 4px;">شراء</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 5: GIFTS CATALOG PAGE -->
+    <div id="page-gifts" class="page-content">
+        <h2 class="header-title">كتالوج الهدايا والواجب 🎁</h2>
+
+        <div class="card" style="text-align: center;">
+            <p style="font-size: 0.85rem; color: var(--text-sub);">عبّر عن ذوقك داخل الشات بهدايا وواجبات حقيقية!</p>
+        </div>
+
+        <div class="grid-2">
+            <div class="card" style="text-align: center;">
+                <div style="font-size: 2.5rem;">☕</div>
+                <strong>عزومة قهوة</strong>
+                <div style="font-size: 0.75rem; color: var(--text-sub); margin: 4px 0;">Lvl 1 | 500 نقطة</div>
+                <div class="badge badge-success">صافي كاش: 2.50 ج</div>
+                <button class="btn btn-outline" style="margin-top: 8px; font-size: 0.8rem;" onclick="triggerGiftAnim('☕ عزومة قهوة')">إرسال 🎁</button>
+            </div>
+
+            <div class="card" style="text-align: center;">
+                <div style="font-size: 2.5rem;">🍫</div>
+                <strong>وافل / شوكولاتة</strong>
+                <div style="font-size: 0.75rem; color: var(--text-sub); margin: 4px 0;">Lvl 3 | 1,000 نقطة</div>
+                <div class="badge badge-success">صافي كاش: 5.00 ج</div>
+                <button class="btn btn-outline" style="margin-top: 8px; font-size: 0.8rem;" onclick="triggerGiftAnim('🍫 شوكولاتة')">إرسال 🎁</button>
+            </div>
+
+            <div class="card" style="text-align: center;">
+                <div style="font-size: 2.5rem;">🍕</div>
+                <strong>شريحة بيتزا</strong>
+                <div style="font-size: 0.75rem; color: var(--text-sub); margin: 4px 0;">Lvl 5 | 2,000 نقطة</div>
+                <div class="badge badge-success">صافي كاش: 10.00 ج</div>
+                <button class="btn btn-outline" style="margin-top: 8px; font-size: 0.8rem;" onclick="triggerGiftAnim('🍕 شريحة بيتزا')">إرسال 🎁</button>
+            </div>
+
+            <div class="card" style="text-align: center;">
+                <div style="font-size: 2.5rem;">🚗</div>
+                <strong>توصيلة أوبر</strong>
+                <div style="font-size: 0.75rem; color: var(--text-sub); margin: 4px 0;">Lvl 10 | 5,000 نقطة</div>
+                <div class="badge badge-success">صافي كاش: 25.00 ج</div>
+                <button class="btn btn-outline" style="margin-top: 8px; font-size: 0.8rem;" onclick="triggerGiftAnim('🚗 توصيلة أوبر')">إرسال 🎁</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM NAVIGATION BAR -->
+    <nav class="nav-bar">
+        <a class="nav-item active" onclick="navigateTo('page-login')">
+            <span class="nav-icon">🔑</span>
+            <span>الدخول</span>
+        </a>
+        <a class="nav-item" onclick="navigateTo('page-onboarding')">
+            <span class="nav-icon">📝</span>
+            <span>التسجيل</span>
+        </a>
+        <a class="nav-item" onclick="navigateTo('page-profile')">
+            <span class="nav-icon">👤</span>
+            <span>البروفايل</span>
+        </a>
+        <a class="nav-item" onclick="navigateTo('page-store')">
+            <span class="nav-icon">💎</span>
+            <span>المتجر</span>
+        </a>
+        <a class="nav-item" onclick="navigateTo('page-gifts')">
+            <span class="nav-icon">🎁</span>
+            <span>الهدايا</span>
+        </a>
+    </nav>
+
+</div>
+
+<script>
+    // Navigation Routing Function
+    function navigateTo(pageId) {
+        const pages = document.querySelectorAll('.page-content');
+        pages.forEach(page => page.classList.remove('active'));
+
+        const targetPage = document.getElementById(pageId);
+        if (targetPage) {
+            targetPage.classList.add('active');
+        }
+
+        // Update Nav Active State
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => item.classList.remove('active'));
+    }
+
+    // Toggle Role Dashboard Views
+    function toggleProfileRole(role) {
+        document.getElementById('buyerPanel').style.display = 'none';
+        document.getElementById('sellerPanel').style.display = 'none';
+        document.getElementById('adminPanel').style.display = 'none';
+
+        if (role === 'buyer') {
+            document.getElementById('buyerPanel').style.display = 'block';
+        } else if (role === 'seller') {
+            document.getElementById('sellerPanel').style.display = 'block';
+        } else if (role === 'admin') {
+            document.getElementById('adminPanel').style.display = 'block';
+        }
+    }
+
+    // Visual Gift Animation Demo
+    function triggerGiftAnim(giftName) {
+        alert('🎉 تم إرسال ' + giftName + ' بنجاح مع الحركة التفاعلية والصوت في الشات!');
+    }
+</script>
+
+</body>
+</html>
