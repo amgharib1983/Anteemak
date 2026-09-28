@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://anteemak-ui.github.io/sitemap.xml
