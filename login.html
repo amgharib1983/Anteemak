@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>تسجيل الدخول — أنتيمك</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar"><a href="index.html"><img class="logo" src="assets/logo.svg" alt="anteemak"></a><span class="chip">معاينة 13.1</span></div>
+  <main>
+    <p class="eyebrow">أهلاً بيك تاني</p>
+    <h1>سجّل دخولك</h1>
+    <p class="sub">رقم موبايل أو إيميل — السيستم هيكتشف النوع لوحده.</p>
+
+    <div class="card">
+      <div class="field">
+        <label for="id">رقم الموبايل أو الإيميل</label>
+        <input id="id" type="text" placeholder="01xxxxxxxxx  أو  name@gmail.com" oninput="detect(this.value)">
+        <div class="hint" id="hint">هنبعتلك كود تأكيد أو نطلب كلمة المرور حسب اللي هتكتبه.</div>
+      </div>
+      <button class="btn btn-primary" onclick="go()">متابعة</button>
+    </div>
+
+    <div class="divider">أو سجّل دخول بـ</div>
+    <div class="card tight" style="display:flex; gap:10px">
+      <button class="btn btn-ghost" style="flex:1">فيسبوك</button>
+      <button class="btn btn-ghost" style="flex:1">إنستجرام</button>
+    </div>
+
+    <p class="link-row">لسه معملتش حساب؟ <a href="register.html">اعمل حساب جديد</a></p>
+  </main>
+  <div class="tabbar">
+    <a class="on" href="login.html"><b>◎</b>دخول</a>
+    <a href="register.html"><b>✎</b>تسجيل</a>
+    <a href="profile.html"><b>◐</b>بروفايل</a>
+    <a href="store.html"><b>▤</b>النقط</a>
+    <a href="gifts.html"><b>❀</b>هدايا</a>
+  </div>
+</div>
+<script>
+function detect(v){
+  const h=document.getElementById('hint');
+  if(/^01[0-9]{9}$/.test(v.trim())) h.textContent="✅ رقم موبايل — هنبعتلك كود تأكيد (OTP) واتساب أو SMS.";
+  else if(/^[^@]+@[^@]+\.[^@]+$/.test(v.trim())) h.textContent="✅ إيميل — هيتطلب كلمة المرور.";
+  else h.textContent="هنبعتلك كود تأكيد أو نطلب كلمة المرور حسب اللي هتكتبه.";
+}
+function go(){
+  const v=document.getElementById('id').value.trim();
+  if(!v){alert('اكتب رقم موبايل أو إيميل الأول 🙂');return;}
+  alert('معاينة فقط — في النسخة الحقيقية كان هيتبعتلك كود تأكيد دلوقتي.');
+}
+</script>
+</body>
+</html>

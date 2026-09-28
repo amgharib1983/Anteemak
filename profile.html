@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>بروفايل سهام — أنتيمك</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .cover{background:linear-gradient(135deg,var(--red-deep),var(--red)); border-radius:0 0 26px 26px; padding:20px 18px 46px; color:#fff; position:relative}
+  .avatar-wrap{width:88px;height:88px;border-radius:50%;background:#fff;border:4px solid #fff; margin:0 auto 10px;
+    display:flex;align-items:center;justify-content:center; font-size:38px; box-shadow:var(--shadow)}
+  .cover h1{color:#fff; text-align:center; font-size:19px; margin:0}
+  .cover .meta{text-align:center; font-size:12.5px; color:#ffe3e3; margin-top:3px}
+  .badges{display:flex; justify-content:center; gap:6px; margin-top:10px; flex-wrap:wrap}
+  .simcard{margin:-32px 18px 18px; background:#fff; border-radius:16px; padding:14px 16px; box-shadow:var(--shadow); border:1px solid var(--line)}
+  .simcard label{font-size:12px; color:var(--ink-soft); font-weight:700}
+  .viewer-seg{display:flex; gap:6px; margin-top:8px}
+  .viewer-seg button{flex:1; padding:8px 4px; font-size:12px; border-radius:10px; border:1.5px solid var(--line); background:var(--white); font-family:inherit; font-weight:700; color:var(--ink-soft)}
+  .viewer-seg button.on{border-color:var(--red); background:#fdecec; color:var(--red-deep)}
+  .sec-title{display:flex; justify-content:space-between; align-items:center}
+  .sec-title .tag{font-size:10.5px; color:var(--ink-soft)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="cover">
+    <div class="avatar-wrap">👩🏻</div>
+    <h1>سهام، 27</h1>
+    <div class="meta">القاهرة · انتيم Lvl.3 · بروفايل موثّق 92%</div>
+    <div class="badges">
+      <span class="chip gold">⭐ 4.8</span>
+      <span class="chip red">انتيم</span>
+      <span class="chip">Streak 14 يوم</span>
+    </div>
+  </div>
+
+  <div class="simcard">
+    <label>معاينة: أنت بتتفرج كزائر برتبة —</label>
+    <div class="viewer-seg">
+      <button class="on" onclick="setLevel(1,this)">صاحب جديد</button>
+      <button onclick="setLevel(2,this)">صديق موثّق</button>
+      <button onclick="setLevel(3,this)">انتيم VIP</button>
+    </div>
+  </div>
+
+  <main style="padding-top:0">
+    <div class="section-block">
+      <div class="sec-title"><h3>Section 1 — الهوية الأساسية</h3><span class="tag">مستوى 1+</span></div>
+      <p>سهام، 27 سنة، القاهرة. "بحب القراءة والسفر الخفيف، وبدوّر على ناس بتفهم جدية الكلام من هزاره 🙂"</p>
+    </div>
+
+    <div class="section-block" data-min="2">
+      <div class="sec-title"><h3>Section 2 — المواصفات</h3><span class="tag">مستوى 2+</span></div>
+      <p>الطول 165 سم، هيئة الجسم رياضي، الشعر بني غامق. + مواصفات الشريك المطلوبة.</p>
+      <div class="lock-note"><b>🔒 محتاج توثيق أعلى</b><span>وثّق رقمك لرؤية بقية التفاصيل</span></div>
+    </div>
+
+    <div class="section-block" data-min="1">
+      <div class="sec-title"><h3>Section 3 — الأفاتار</h3><span class="tag">مستوى 1+</span></div>
+      <p>الصورة الحقيقية لسه Blur لحد ما نسبة توثيقها تزيد — الأفاتار الكاريكاتيري ده هو الافتراضي دلوقتي.</p>
+    </div>
+
+    <div class="section-block" data-min="2">
+      <div class="sec-title"><h3>Section 4 — الشخصية</h3><span class="tag">مستوى 2+</span></div>
+      <p>نسبة التوافق النفسي معاك: <b>88%</b> · حنين 80% | بيتوتي 90% | هادي 75%</p>
+      <div class="lock-note"><b>🔒 محتاج توثيق أعلى</b><span>وثّق رقمك لرؤية بقية التفاصيل</span></div>
+    </div>
+
+    <div class="section-block" data-min="3">
+      <div class="sec-title"><h3>Section 5 — الخلفية الاجتماعية</h3><span class="tag">مستوى 3</span></div>
+      <p>خريجة تجارة، تعمل في شركة خاصة، أعزب. الهدف من التواجد: تعارف وصداقة.</p>
+      <div class="lock-note"><b>🔒 مقفول</b><span>يظهر لـ انتيم VIP فقط</span></div>
+    </div>
+
+    <div class="section-block" data-min="1">
+      <div class="sec-title"><h3>Section 7 — الأمان والتوثيق</h3><span class="tag">ظاهر للكل</span></div>
+      <p>✅ رقم موبايل مؤكد &nbsp; ✅ صورة موثّقة بسيلفي حي (مش معروضة) &nbsp; ✅ عضوة من 8 شهور</p>
+    </div>
+
+    <button class="btn btn-primary" style="margin-top:6px">ابعت هاي 👋</button>
+  </main>
+
+  <div class="tabbar">
+    <a href="login.html"><b>◎</b>دخول</a>
+    <a href="register.html"><b>✎</b>تسجيل</a>
+    <a class="on" href="profile.html"><b>◐</b>بروفايل</a>
+    <a href="store.html"><b>▤</b>النقط</a>
+    <a href="gifts.html"><b>❀</b>هدايا</a>
+  </div>
+</div>
+<script>
+function setLevel(n,btn){
+  [...btn.parentElement.children].forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.section-block[data-min]').forEach(el=>{
+    const min=+el.dataset.min;
+    let note=el.querySelector('.lock-note');
+    if(n<min){
+      el.querySelectorAll('p').forEach(p=>p.classList.add('locked'));
+      if(!note){note=document.createElement('div');note.className='lock-note';
+        note.innerHTML='<b>🔒 محتاج توثيق أعلى</b><span>وثّق رقمك لرؤية بقية التفاصيل</span>';el.appendChild(note);}
+      note.style.display='flex';
+    } else {
+      el.querySelectorAll('p').forEach(p=>p.classList.remove('locked'));
+      if(note) note.style.display='none';
+    }
+  });
+}
+</script>
+</body>
+</html>

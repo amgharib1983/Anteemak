@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>حساب جديد — أنتيمك</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .steps{display:flex; gap:6px; margin-bottom:16px}
+  .steps i{flex:1; height:5px; border-radius:99px; background:var(--line)}
+  .steps i.on{background:var(--red)}
+  .consent-item{display:flex; align-items:flex-start; gap:10px; padding:10px 0; border-bottom:1px solid var(--line)}
+  .consent-item:last-child{border-bottom:0}
+  .consent-item a{font-weight:700; color:var(--red-deep); text-decoration:none}
+  .consent-item small{display:block; color:var(--ink-soft); font-size:11.5px; margin-top:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar"><a href="index.html"><img class="logo" src="assets/logo.svg" alt="anteemak"></a><span class="chip">معاينة 13.2</span></div>
+  <main>
+    <p class="eyebrow">خطوة 1 من 4 — البيانات الإلزامية</p>
+    <h1>يلا نبدأ</h1>
+    <div class="steps"><i class="on"></i><i></i><i></i><i></i></div>
+
+    <div class="card">
+      <div class="field"><label>الاسم الأول</label><input type="text" placeholder="مثلاً: سارة"></div>
+
+      <div class="field">
+        <label>النوع</label>
+        <div class="seg">
+          <button type="button" class="on" onclick="pick(this)">أنثى</button>
+          <button type="button" onclick="pick(this)">ذكر</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>تاريخ الميلاد</label>
+        <input id="dob" type="date" onchange="checkAge()">
+        <div class="hint" id="ageHint">لازم 18 سنة فأكتر — بيتقارن لاحقاً مع أي حساب تربطه (فيسبوك/إنستجرام).</div>
+      </div>
+
+      <div class="field"><label>المحافظة</label>
+        <select><option>القاهرة</option><option>الجيزة</option><option>الإسكندرية</option><option>محافظة تانية</option></select>
+      </div>
+    </div>
+
+    <h2 style="margin-top:22px">ملفات الموافقة</h2>
+    <div class="card">
+      <div class="consent-item">
+        <input type="checkbox" id="c1" style="margin-top:4px">
+        <label for="c1"><a href="#">إخلاء المسؤولية القانونية</a><small>أنتيمك منصة تعارف وتواصل فقط — مش مسؤولة عن أي اتفاق مالي أو لقاء يتم خارج التطبيق.</small></label>
+      </div>
+      <div class="consent-item">
+        <input type="checkbox" id="c2" style="margin-top:4px">
+        <label for="c2"><a href="#">الشروط والأحكام</a><small>قواعد استخدام أنتيمك ونظام النقط.</small></label>
+      </div>
+      <div class="consent-item">
+        <input type="checkbox" id="c3" style="margin-top:4px">
+        <label for="c3"><a href="#">سياسة الخصوصية</a><small>إزاي بنستخدم بياناتك — طبقاً لقانون حماية البيانات المصري.</small></label>
+      </div>
+    </div>
+    <p class="hint" style="margin-bottom:16px">✋ الخطوة دي إلزامية بالكامل — مفيش "تخطي" ليها، بعكس باقي بيانات البروفايل.</p>
+
+    <button class="btn btn-primary" id="cta" disabled onclick="alert('معاينة فقط — هيتفتح الحساب بحالة New / Low Trust ويودّيك لصفحة البروفايل.')">إنشاء الحساب</button>
+    <p class="link-row">عندك حساب؟ <a href="login.html">سجّل دخول</a></p>
+  </main>
+  <div class="tabbar">
+    <a href="login.html"><b>◎</b>دخول</a>
+    <a class="on" href="register.html"><b>✎</b>تسجيل</a>
+    <a href="profile.html"><b>◐</b>بروفايل</a>
+    <a href="store.html"><b>▤</b>النقط</a>
+    <a href="gifts.html"><b>❀</b>هدايا</a>
+  </div>
+</div>
+<script>
+function pick(b){ [...b.parentElement.children].forEach(x=>x.classList.remove('on')); b.classList.add('on'); }
+function checkAge(){
+  const d=new Date(document.getElementById('dob').value);
+  const h=document.getElementById('ageHint');
+  if(isNaN(d)) return;
+  const age=(Date.now()-d.getTime())/3.15576e10;
+  h.innerHTML = age<18 ? '🔴 لازم 18 سنة فأكتر — التسجيل هيترفض بالسن دي.' : '🟢 السن مقبولة.';
+  h.style.color = age<18 ? 'var(--red-deep)' : '#1e6b30';
+}
+['c1','c2','c3'].forEach(id=>document.getElementById(id).addEventListener('change',()=>{
+  const all=['c1','c2','c3'].every(x=>document.getElementById(x).checked);
+  document.getElementById('cta').disabled=!all;
+}));
+</script>
+</body>
+</html>
